@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
-const port = 8082;
+const port = 8084;
 var fs = require('fs'),
     path = require('path'),
     filePath = path.join(__dirname, 'documents/index.html');
 
 app.listen(port, () => {
-    console.log('listening for request on port 8082 test by HoangVVD');
+    console.log('listening for request on port 8084 test by HoangVVD');
 });
 app.get('/', (req, res) => {
     //console.log('request made');
