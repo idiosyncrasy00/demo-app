@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "app-demo.fullname" . }}
+  labels:
+    {{- include "app-demo.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "app-demo.selectorLabels" . | nindent 4 }}
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   labels:
+#     app.kubernetes.io/instance: demo-app-argocd
+#     app.kubernetes.io/managed-by: Helm
+#     app.kubernetes.io/name: app-demo
+#     app.kubernetes.io/version: 1.16.0
+#     helm.sh/chart: app-demo-0.1.0
+#   name: demo-app-argocd-app-demo
+#   namespace: demo
+# spec:
+#   ports:
+#     - name: http
+#       port: 80
+#       protocol: TCP
+#       targetPort: http
+#   selector:
+#     app.kubernetes.io/instance: demo-app-argocd
+#     app.kubernetes.io/name: app-demo
+#   type: NodePort
+#   syncPolicy:
+#     syncOptions:
+#     - CreateNamespace=true
+#     - PruneLast=true
+
+#     automated:
+#       selfHeal: true
+#       prune: true
