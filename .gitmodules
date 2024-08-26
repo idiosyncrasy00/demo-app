@@ -1,3 +1,0 @@
-[submodule "app-helmchart"]
-	path = app-helmchart
-	url = https://github.com/idiosyncrasy00/app-helmchart.git
