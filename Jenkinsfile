@@ -49,18 +49,21 @@ pipeline {
             }
         }
 
-        stage('Update value in helm-chart') {
-            steps {
-				withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-				sh """
-					   git config --global user.email "jenkins@example.com"; git config --global user.name "jenkins";
-					   sed -i 's|  tag: .*|  tag: "${version}"|' ${helmValueFile}
-					   echo "Entering helm chart...."
-					   git add . ; git commit -m "Update to version ${version}"; git push https://x-access-token:${GITHUB_TOKEN}@github.com/idiosyncrasy00/demo-app.git
-				       echo "After helm chart...."
-				   """		
-				}				
-            }
-        }
+	stage('Update value in helm-chart') {
+	    steps {
+	        withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+	            sh """
+	                git config --global user.email "jenkins@example.com"
+	                git config --global user.name "jenkins"
+	                sed -i 's|  tag: .*|  tag: "${version}"|' ${helmValueFile}
+	                echo "Entering helm chart...."
+	                git add ${helmValueFile}
+	                git commit -m "Update to version ${version}"
+	                git push https://x-access-token:${GITHUB_TOKEN}@github.com/idiosyncrasy00/demo-app.git
+	                echo "After helm chart...."
+	            """
+	        }
+	    }
+	}
     }
 }
